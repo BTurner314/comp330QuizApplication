@@ -18,7 +18,7 @@ public class Main extends Application {
     primaryStage.setScene(TitleScreen.createTitleScreen());
 
     // Button Functions
-    TitleScreen.setTakeButton(primaryStage);
+    TitleScreen.setButtons(primaryStage);
     primaryStage.show();
   }
 }

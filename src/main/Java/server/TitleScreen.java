@@ -40,13 +40,18 @@ public class TitleScreen {
     return titleScreen;
   }
 
-  public static void setTakeButton(Stage primaryStage) {
+  public static void setButtons(Stage primaryStage) {
     take.setOnAction(e -> startTest(primaryStage));
+    create.setOnAction(e -> startQCreate(primaryStage));
   }
 
   public static void startTest(Stage primaryStage) {
 
     primaryStage.setScene(MainWindow.createMainWindow());
     UserInputs.getNextQuestion();
+  }
+
+  public static void startQCreate(Stage primaryStage) {
+    primaryStage.setScene(QuizCreation.createQCreateScreen());
   }
 }
