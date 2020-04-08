@@ -18,6 +18,7 @@ public class Main extends Application {
     TitleScreen.createTitleScreen();
     QuizCreation.createQCreateScreen();
     MainWindow.createMainWindow();
+    NewQuizSettings.createNewQuizSettings();
 
     // Quiz Elements
     primaryStage.setTitle("Quiz Game");
