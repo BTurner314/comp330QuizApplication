@@ -9,16 +9,22 @@ public class Main extends Application {
     launch(args);
   }
 
-  public void start(Stage primaryStage) throws Exception {
+  private static Stage primary;
 
+  public void start(Stage primaryStage) throws Exception {
+    primary = primaryStage;
     QProcessor tester = new QProcessor("TestQProcessor.json");
+
+    TitleScreen.createTitleScreen();
+    QuizCreation.createQCreateScreen();
 
     // Quiz Elements
     primaryStage.setTitle("Quiz Game");
-    primaryStage.setScene(TitleScreen.createTitleScreen());
-
-    // Button Functions
-    TitleScreen.setButtons(primaryStage);
+    primaryStage.setScene(TitleScreen.getTitleScreen());
     primaryStage.show();
+  }
+
+  public static Stage getPrimaryStage() {
+    return primary;
   }
 }
