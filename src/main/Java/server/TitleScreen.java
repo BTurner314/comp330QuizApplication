@@ -43,7 +43,7 @@ public class TitleScreen {
   }
 
   public static void startTest() {
-    Main.getPrimaryStage().setScene(MainWindow.createMainWindow());
+    changeScene(MainWindow.getMainScene());
     UserInputs.getNextQuestion();
   }
 

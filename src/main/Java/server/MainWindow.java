@@ -22,7 +22,7 @@ public class MainWindow {
   private static HBox textBox = new HBox();
   private static Label scoreBoard = new Label();
 
-  public static Scene createMainWindow() {
+  public static void createMainWindow() {
     mainLayout.setTop(topWindow);
     mainLayout.setCenter(textBox);
     mainLayout.setRight(scoreBoard);
@@ -41,8 +41,6 @@ public class MainWindow {
     // binds Label text
     scoreBoard.textProperty().bind(ScoreBoard.getScoreBoard());
     questionOutput.textProperty().bind(QuestionOutput.getQuestionOutputText());
-
-    return mainScene;
   }
 
   public static void setCorrect() {
@@ -57,5 +55,9 @@ public class MainWindow {
 
   public static BorderPane getGameWindow() {
     return mainLayout;
+  }
+
+  public static Scene getMainScene() {
+    return mainScene;
   }
 }
