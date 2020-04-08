@@ -1,34 +1,34 @@
 {
   "trueFalse" : {
-    "this is true" : "true",
-    "this is false" : "false"
+    "Is the sky blue?" : "true",
+    "Is the Earth flat?" : "false"
   },
 
   "matching" : {
-    "S1" : {
-      "red": "red",
-      "blue": "blue",
-      "green": "green"
+    "Match the state to its capital" : {
+      "Illinois": "Springfield",
+      "Missouri": "Jefferson City",
+      "Kansas": "Topeka"
     },
-    "S2" : {
-      "yellow" : "yellow",
-      "orange" : "orange",
-      "black" : "black"
+    "Match the colors in English to Spanish" : {
+      "yellow" : "amarilla",
+      "orange" : "naranja",
+      "black" : "negra"
     }
   },
 
   "multipleChoice" : {
-    "Q1" : {
-      "A" : "C",
-      "B" : "I",
+    "Dad in the Simspons" : {
+      "Homer" : "C",
+      "Peter" : "I",
       "C" : "I",
       "D" : "I",
       "E" : "I"
     },
-    "Q2" : {
-      "A" : "I",
-      "B" : "C",
-      "C" : "I"
+    "A five sided shape." : {
+      "Square" : "I",
+      "Pentagon" : "C",
+      "Triangle" : "I"
     }
   }
 }
