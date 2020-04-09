@@ -3,9 +3,12 @@ package server;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -69,6 +72,7 @@ public class NewQuizSettings {
     return newQuizSettings;
   }
 
+  // sets how many rounds and questions per round the quiz will be as well as the name of the quiz
   public static void settingsInput() {
     roundsAmount = Integer.valueOf(roundsInput.getText());
     questionsPerRound = Integer.valueOf(questionsInput.getText());
@@ -98,6 +102,7 @@ public class NewQuizSettings {
     nextInput.setOnAction(e -> nextCategoryStart());
   }
 
+  // depending on the type of question directs the ui creation to the right methods
   public static void nextCategoryStart() {
 
     categoryTitle.setText(categoryTitleInput.getText());
@@ -112,6 +117,7 @@ public class NewQuizSettings {
     }
   }
 
+  // keeps track of how many question and rounds have been entered to keep the right amount
   public static void nextQuestionInputCheck() {
     if (questionCounter <= questionsPerRound) {
       nextCategoryStart();
@@ -119,11 +125,12 @@ public class NewQuizSettings {
       if (roundCounter < roundsAmount) {
         openCategoryInput();
       } else if (roundCounter >= roundsAmount) {
-        // exit method
+        // TODO exit method
       }
     }
   }
 
+  // create the ui for a True false question input
   public static void createTFInput() {
     questionCounter++;
 
@@ -143,13 +150,68 @@ public class NewQuizSettings {
     next.setOnAction(e -> writeAnswers());
   }
 
+  // writes the inputs to the json file
   public static void writeAnswers() {
     // TODO write to JSON
     questionStatementInput.clear();
     nextQuestionInputCheck();
   }
 
-  public static void createMatchingInput() {}
+  // create the ui for a matching question input
+  public static void createMatchingInput() {
+    questionCounter++;
 
+    VBox tempV = new VBox();
+    HBox tempH = new HBox();
+    VBox list1 = new VBox();
+    VBox list2 = new VBox();
+    Label question = new Label();
+    Label match1 = new Label();
+    Label match2 = new Label();
+    ListView<String> matchingASet = new ListView<String>();
+    ListView<String> matchingBSet = new ListView<String>();
+    TextField matchingA = new TextField();
+    TextField matchingB = new TextField();
+    Button next = new Button("Next");
+
+    question.setText("Question " + questionCounter);
+    match1.setText("Matching Set A:");
+    match2.setText("Matching Set B:");
+
+    matchingA.setOnAction(
+        e -> {
+            matchingASet.getItems().add(matchingA.getText());
+            matchingA.clear();
+        });
+
+    matchingB.setOnAction(
+        e -> {
+            matchingBSet.getItems().add(matchingB.getText());
+            matchingB.clear();
+        });
+
+    tempH.getChildren().addAll(list1, list2);
+    list1.getChildren().addAll(match1, matchingA, matchingASet);
+    list2.getChildren().addAll(match2, matchingB, matchingBSet);
+    tempV.getChildren().addAll(question, questionStatementInput, tempH, next);
+
+    border.getChildren().clear();
+    border.setCenter(tempV);
+
+    next.setOnAction(
+        e -> {
+          if (matchingASet.getItems().size() != matchingBSet.getItems().size()) {
+            Alert alert =
+                new Alert(
+                    Alert.AlertType.ERROR,
+                    "Must have the same amount of matching statements in both lists.",
+                    ButtonType.OK);
+            alert.show();
+          }
+          else writeAnswers();
+        });
+  }
+
+  // create the ui for a multiple choice question input
   public static void createMultipleChoiceInput() {}
 }
