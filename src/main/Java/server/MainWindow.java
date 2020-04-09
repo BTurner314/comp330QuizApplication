@@ -2,7 +2,7 @@ package server;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,16 +20,18 @@ public class MainWindow {
   private static Text questionOutput = new Text();
   private static Text correctIncorrect = new Text();
   private static HBox textBox = new HBox();
+  private static VBox rightVBox = new VBox();
   private static Label scoreBoard = new Label();
+  private static Button back = new Button("Back");
 
-  public static Scene createMainWindow() {
+  public static void createMainWindow() {
     mainLayout.setTop(topWindow);
     mainLayout.setCenter(textBox);
-    mainLayout.setRight(scoreBoard);
+    mainLayout.setRight(rightVBox);
 
     textBox.getChildren().addAll(questionOutput);
     topWindow.getChildren().addAll(correctIncorrect);
-
+    rightVBox.getChildren().addAll(scoreBoard, back);
     // UI formatting
     questionOutput.setFont(new Font(20));
     questionOutput.setWrappingWidth(620);
@@ -42,7 +44,7 @@ public class MainWindow {
     scoreBoard.textProperty().bind(ScoreBoard.getScoreBoard());
     questionOutput.textProperty().bind(QuestionOutput.getQuestionOutputText());
 
-    return mainScene;
+    back.setOnAction(e -> TitleScreen.changeScene(TitleScreen.getTitleScreen()));
   }
 
   public static void setCorrect() {
@@ -57,5 +59,9 @@ public class MainWindow {
 
   public static BorderPane getGameWindow() {
     return mainLayout;
+  }
+
+  public static Scene getMainScene() {
+    return mainScene;
   }
 }

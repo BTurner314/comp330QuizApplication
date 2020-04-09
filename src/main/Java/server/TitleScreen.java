@@ -20,7 +20,7 @@ public class TitleScreen {
   private static Button settings = new Button("Settings");
   private static Button exit = new Button("Exit");
 
-  public static Scene createTitleScreen() {
+  public static void createTitleScreen() {
 
     title.setText("Quiz Game");
     title.setFont(new Font(48));
@@ -29,6 +29,10 @@ public class TitleScreen {
     titleSelect.getChildren().addAll(take, create, settings, exit);
     titleLayout.setAlignment(title, Pos.CENTER);
 
+    // set Button Functions
+    take.setOnAction(e -> startTest());
+    create.setOnAction(e -> changeScene(QuizCreation.getQCreationScene()));
+
     // UI Formatting
     titleSelect.setAlignment(Pos.CENTER);
     titleSelect.setSpacing(10);
@@ -36,17 +40,18 @@ public class TitleScreen {
     create.setMinSize(20, 40);
     settings.setMinSize(20, 40);
     exit.setMinSize(20, 40);
+  }
 
+  public static void startTest() {
+    changeScene(MainWindow.getMainScene());
+    UserInputs.getNextQuestion();
+  }
+
+  public static Scene getTitleScreen() {
     return titleScreen;
   }
 
-  public static void setTakeButton(Stage primaryStage) {
-    take.setOnAction(e -> startTest(primaryStage));
-  }
-
-  public static void startTest(Stage primaryStage) {
-
-    primaryStage.setScene(MainWindow.createMainWindow());
-    UserInputs.getNextQuestion();
+  public static void changeScene(Scene scene) {
+    Main.getPrimaryStage().setScene(scene);
   }
 }
