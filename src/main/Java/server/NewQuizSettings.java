@@ -31,7 +31,6 @@ public class NewQuizSettings {
   private static TextField roundsInput = new TextField();
   private static TextField questionsInput = new TextField();
   private static TextField categoryTitleInput = new TextField();
-  private static TextField questionStatementInput = new TextField();
   private static Button next = new Button("Next");
   private static Scene newQuizSettings = new Scene(border, 900, 600);
   private static Insets inset = new Insets(20);
@@ -74,9 +73,10 @@ public class NewQuizSettings {
 
   // sets how many rounds and questions per round the quiz will be as well as the name of the quiz
   public static void settingsInput() {
+    // TODO add checking for non integer values
     roundsAmount = Integer.valueOf(roundsInput.getText());
     questionsPerRound = Integer.valueOf(questionsInput.getText());
-    quizTitle.setText(fileNameInput.getText());
+    quizTitle.setText(fileNameInput.getText().trim());
     // TODO Store quizTitle in JSON
     openCategoryInput();
   }
@@ -105,7 +105,7 @@ public class NewQuizSettings {
   // depending on the type of question directs the ui creation to the right methods
   public static void nextCategoryStart() {
 
-    categoryTitle.setText(categoryTitleInput.getText());
+    categoryTitle.setText(categoryTitleInput.getText().trim());
     roundType = questionType.getValue();
 
     if (roundType.equalsIgnoreCase("True or False")) {
@@ -138,6 +138,7 @@ public class NewQuizSettings {
     Button next = new Button("Next");
     Label tempLabel = new Label();
     ComboBox<String> choice = new ComboBox<String>();
+    TextField questionStatementInput = new TextField();
 
     border.getChildren().clear();
     border.setCenter(temp);
@@ -147,14 +148,11 @@ public class NewQuizSettings {
     temp.setAlignment(Pos.CENTER);
     temp.getChildren().addAll(categoryTitle, tempLabel, questionStatementInput, choice, next);
 
-    next.setOnAction(e -> writeAnswers());
-  }
-
-  // writes the inputs to the json file
-  public static void writeAnswers() {
-    // TODO write to JSON
-    questionStatementInput.clear();
-    nextQuestionInputCheck();
+    next.setOnAction(
+        e -> {
+          // TODO write to JSON
+          nextQuestionInputCheck();
+        });
   }
 
   // create the ui for a matching question input
@@ -172,22 +170,29 @@ public class NewQuizSettings {
     ListView<String> matchingBSet = new ListView<String>();
     TextField matchingA = new TextField();
     TextField matchingB = new TextField();
+    TextField questionStatementInput = new TextField();
     Button next = new Button("Next");
 
+    tempV.setSpacing(10);
+    tempV.setAlignment(Pos.CENTER);
     question.setText("Question " + questionCounter);
     match1.setText("Matching Set A:");
     match2.setText("Matching Set B:");
 
     matchingA.setOnAction(
         e -> {
-            matchingASet.getItems().add(matchingA.getText());
+          if (!matchingA.getText().trim().isEmpty()) {
+            matchingASet.getItems().add(matchingA.getText().trim());
             matchingA.clear();
+          }
         });
 
     matchingB.setOnAction(
         e -> {
-            matchingBSet.getItems().add(matchingB.getText());
+          if (!matchingB.getText().trim().isEmpty()) {
+            matchingBSet.getItems().add(matchingB.getText().trim());
             matchingB.clear();
+          }
         });
 
     tempH.getChildren().addAll(list1, list2);
@@ -207,11 +212,45 @@ public class NewQuizSettings {
                     "Must have the same amount of matching statements in both lists.",
                     ButtonType.OK);
             alert.show();
+          } else {
+            // TODO write to JSON
+            nextQuestionInputCheck();
           }
-          else writeAnswers();
         });
   }
 
   // create the ui for a multiple choice question input
-  public static void createMultipleChoiceInput() {}
+  public static void createMultipleChoiceInput() {
+	  questionCounter++;
+	  VBox tempV = new VBox();
+    Label question = new Label();
+    Label answers = new Label();
+    ListView<String> mcSet = new ListView<String>();
+    TextField questionStatementInput = new TextField();
+    TextField mcInput = new TextField();
+    Button next = new Button("Next");
+
+    mcInput.setOnAction(
+        e -> {
+          if (!mcInput.getText().trim().isEmpty()) {
+            mcSet.getItems().add(mcInput.getText().trim());
+            mcInput.clear();
+          }
+        });
+
+    tempV.setSpacing(10);
+    tempV.setAlignment(Pos.CENTER);
+    question.setText("Question " + questionCounter);
+    answers.setText("Input Multiple Choice Options:");
+    tempV.getChildren().addAll(question, questionStatementInput, answers, mcInput, mcSet, next);
+
+    border.getChildren().clear();
+    border.setCenter(tempV);
+
+    next.setOnAction(
+        e -> {
+          // TODO write to JSON
+          nextQuestionInputCheck();
+        });
+  }
 }
