@@ -221,8 +221,8 @@ public class NewQuizSettings {
 
   // create the ui for a multiple choice question input
   public static void createMultipleChoiceInput() {
-	  questionCounter++;
-	  VBox tempV = new VBox();
+    questionCounter++;
+    VBox tempV = new VBox();
     Label question = new Label();
     Label answers = new Label();
     ListView<String> mcSet = new ListView<String>();
