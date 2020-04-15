@@ -29,3 +29,5 @@ libraryDependencies += "org.openjfx" % "javafx-controls" % "11-ea+25" classifier
 libraryDependencies += "org.openjfx" % "javafx-fxml" % "11-ea+25" classifier osName.value
 
 libraryDependencies += "org.openjfx" % "javafx-graphics" % "11-ea+25" classifier osName.value
+
+libraryDependencies += "com.google.firebase" % "firebase-admin" % "4.0.1"
